@@ -1,0 +1,181 @@
+In Java, inheritance is a fundamental concept that allows you to create a new class (subclass/derived class) based on an
+ existing class (superclass/base class). The subclass inherits attributes and behaviors from the superclass.
+ Here are some key points about Java inheritance, along with notes on objects and APIs:
+
+### 1. **Defining a Class Hierarchy:**
+   - Use the `extends` keyword to create a subclass.
+
+   ```java
+   class Subclass extends Superclass {
+       // subclass members
+   }
+   ```
+
+### 2. **Access Modifiers:**
+   - `public`, `protected`, and `private` are used to control access to members (fields and methods) of a class.
+   - Inheritance allows subclasses to access public and protected members of the superclass.
+
+### 3. **Method Overriding:**
+   - Subclasses can provide a specific implementation for a method already defined in the superclass.
+   ```java
+   @Override
+   returnType methodName() {
+       // subclass implementation
+   }
+   ```
+
+### 4. **Super Keyword:**
+   - `super` is used to refer to the superclass.
+   - `super()` calls the superclass constructor.
+   - `super.method()` calls a method from the superclass.
+
+### 5. **Constructors:**
+   - The subclass constructor can use `super()` to call the superclass constructor.
+   ```java
+   Subclass() {
+       super(); // calls the superclass constructor
+       // subclass constructor code
+   }
+   ```
+
+### 6. **Object Class:**
+   - Every class in Java is a subclass of the `Object` class.
+   - `Object` provides methods like `toString()`, `equals()`, and `hashCode()`.
+
+### 7. **Polymorphism:**
+   - Subtypes can be used interchangeably with their base types.
+   - Allows methods to be written to accept objects of the superclass but work correctly with objects of a subclass.
+
+### 8. **Interfaces:**
+   - Java supports multiple interface implementation but only single class inheritance.
+   - Interfaces provide a way to achieve multiple inheritance.
+
+### 9. **Abstract Classes:**
+   - Classes marked as `abstract` cannot be instantiated.
+   - Abstract classes can have abstract methods (without a body) that must be implemented by concrete subclasses.
+
+### 10. **Final Keyword:**
+   - Use `final` to prevent further modification of a class, method, or variable.
+   - Final methods cannot be overridden, and final classes cannot be extended.
+
+### 11. **Java APIs and Inheritance:**
+   - Many Java APIs use inheritance, providing a rich set of classes for various functionalities.
+   - Examples include the Collections Framework (ArrayList, LinkedList, etc.), GUI components, and more.
+
+### Example:
+
+```java
+class Animal {
+    void eat() {
+        System.out.println("Animal is eating");
+    }
+}
+
+class Dog extends Animal {
+    void bark() {
+        System.out.println("Dog is barking");
+    }
+
+    // Overriding the eat method
+    @Override
+    void eat() {
+        System.out.println("Dog is eating");
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Dog myDog = new Dog();
+        myDog.eat();  // Calls overridden method in Dog class
+        myDog.bark();
+    }
+}
+```
+
+In this example, `Dog` is a subclass of `Animal`.
+The `eat` method is overridden in the `Dog` class, demonstrating polymorphism.
+The `bark` method is specific to the `Dog` class.
+
+In Java, method overriding and method overloading are two different concepts related to methods in object-oriented programming.
+
+1. **Method Overriding:**
+   - **Definition:** Method overriding occurs when a subclass provides a specific implementation for a method that is already defined in its superclass.
+   - **Usage:** It is used for achieving runtime polymorphism in Java, where a subclass can provide a specialized implementation of a method inherited from its superclass.
+   - **Requirements:**
+     - The method in the subclass must have the same signature (name, return type, and parameters) as the method in the superclass.
+     - It should be marked with the `@Override` annotation (optional but recommended for clarity).
+   - **Example:**
+     ```java
+     class Animal {
+         void makeSound() {
+             System.out.println("Animal makes a sound");
+         }
+     }
+
+     class Dog extends Animal {
+         @Override
+         void makeSound() {
+             System.out.println("Dog barks");
+         }
+     }
+     ```
+
+2. **Method Overloading:**
+   - **Definition:** Method overloading occurs when a class has multiple methods with the same name but different parameters (number, type, or order of parameters).
+   - **Usage:** It is used for providing multiple ways to perform a similar operation within a class, making the code more readable and user-friendly.
+   - **Requirements:**
+     - The methods must have the same name but different parameter lists.
+     - The return type may or may not be the same.
+   - **Example:**
+     ```java
+     class Calculator {
+         int add(int a, int b) {
+             return a + b;
+         }
+
+         double add(double a, double b) {
+             return a + b;
+         }
+     }
+     ```
+
+In summary, method overriding is about providing a specific implementation for a method in a subclass that is already defined in its superclass,
+while method overloading is about having multiple methods with the same name but different parameter lists within the same class.
+Both concepts contribute to the flexibility and readability of code in Java.
+
+Sealed Classes :
+    Sealed Classes restrict which other classes may extend them
+    eg .
+    public class Shape() {}
+    public class Rectangle extends Shape (){}
+    public class Square extends Shape (){}
+    public class Circel extends Shape () {}
+
+    To make the shape class Sealed
+    public sealed class Shape permits Rectangle Circle {}
+    public class Circel extends Shape () {}
+    public class Rectangle extends Shape (){}
+    public class Rectangle extends Shape permits Square () {}
+    public non-sealed class Circle extends Shape () {}
+    public final class Square extends Rectangle () {}
+
+The use of sealed and permits allows fine-grained control over which subclasses can extend a sealed class. In this case, Shape permits only Rectangle and Circle to be its subclasses.
+
+The final keyword is used to indicate that a class cannot be further subclassed. In the provided code, both Circle and Square are declared as final.
+
+The non-sealed keyword is used when a class wants to allow unrestricted subclasses. In this case, Rectangle allows subclasses, and it specifically permits Square.
+
+There are syntax corrections in the code to ensure proper Java syntax. The parentheses after extends Shape in the original code have been removed.
+public sealed class Shape permits Rectangle, Circle { }
+
+Explanation: This declares a sealed class named Shape that permits two subclasses, Rectangle and Circle. A sealed class restricts the subclasses that can extend it.
+public final class Circle extends Shape { }
+
+Explanation: This declares a final class named Circle that extends the sealed class Shape. Being final means that no further class can extend Circle.
+public non-sealed class Rectangle extends Shape permits Square { }
+
+Explanation: This declares a non-sealed class named Rectangle that extends the sealed class Shape. It also permits a subclass named Square. The non-sealed keyword means that subclasses can be extended without any restrictions.
+public final class Square extends Rectangle { }
+
+Explanation: This declares a final class named Square that extends the non-sealed class Rectangle. Being final means that no further class can extend Square.
+
